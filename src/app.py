@@ -1,7 +1,11 @@
 """Load OpenAI api key from environment variable or ini config
+Remember to add your api_key.ini to .gitignore
 sample ini config: api_key.ini
 [openai]
 APIKEY = xxx
+
+Usage:
+python app.py
 """
 
 import os
@@ -9,11 +13,14 @@ from configparser import ConfigParser
 import vision
 import pyautogui
 
+
 api_key = os.environ.get('OPENAI_API_KEY')
 if api_key is None:
     try:
         config = ConfigParser()
         config.read(os.path.join(os.getcwd(), 'api_key.ini'))
+        #print(f"Current Working Directory: {os.getcwd()}")
+        #print(f"Attempting to read config from: {config.sections()}")
         api_key = config.get('openai', 'APIKEY')
     except:
         print('No OpenAI api key found!')
